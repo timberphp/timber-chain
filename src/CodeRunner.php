@@ -6,11 +6,10 @@ use Psy\Configuration;
 use Psy\Shell;
 use Psy\VersionUpdater\Checker;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Console\Output\Output;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\StreamOutput;
 
-class Clockwerk
+class CodeRunner
 {
     protected Shell $shell;
 
@@ -31,7 +30,7 @@ class Clockwerk
         $this->sherlock = new Detector();
     }
 
-    protected function makeShell()
+    protected function makeShell(): CodeRunner
     {
         $config = new Configuration([
             'updateCheck' => Checker::NEVER,
@@ -52,26 +51,9 @@ class Clockwerk
         return $this;
     }
 
-    /**
-     * @param  Output  $output
-     * @return $this
-     */
-    protected function setShellOutput($output)
+    public function bootstrapAt(string $path = null): CodeRunner
     {
-        $this->shell->setOutput($output);
-
-        return $this;
-    }
-
-    /**
-     * Laravel bootstrap
-     *
-     * @param  string  $target
-     * @return Clockwerk
-     */
-    public function bootstrapAt($target)
-    {
-        $this->targetPath = $target;
+        $this->targetPath = $path ?? getcwd();
 
         $driver = $this->sherlock->detect($this->targetPath);
 
@@ -86,7 +68,7 @@ class Clockwerk
         return $this;
     }
 
-    protected function teleportToTargetDirectory()
+    protected function teleportToTargetDirectory(): CodeRunner
     {
         if ($this->targetPath) {
             chdir($this->targetPath);
@@ -96,10 +78,10 @@ class Clockwerk
     }
 
     /**
-     * @param  string  $phpCode
-     * @return string
+     * @param string $phpCode
+     * @return string|void
      */
-    public function execute($phpCode)
+    public function execute(string $phpCode)
     {
         // result here is php variable
         $result = $this->shell->execute($this->removeComments($phpCode));
@@ -112,16 +94,9 @@ class Clockwerk
 
             return $this->cleanOutput($output);
         }
-
-        //        return null;
     }
 
-    /**
-     * @author spaties/laravel-web-tinker
-     * @param  string  $code
-     * @return string
-     */
-    public function removeComments($code)
+    public function removeComments(string $code): string
     {
         $tokens = token_get_all("<?php\n" . $code . '?>');
 
@@ -136,11 +111,6 @@ class Clockwerk
         }, '');
     }
 
-    /**
-     * @author spaties/laravel-web-tinker
-     * @param  array  $token
-     * @return mixed|string
-     */
     protected function ignoreCommentsAndPhpTags($token)
     {
         [$id, $text] = $token;
@@ -161,12 +131,7 @@ class Clockwerk
         return $text;
     }
 
-    /**
-     * @author spaties/laravel-web-tinker
-     * @param  string  $output
-     * @return string
-     */
-    protected function cleanOutput($output)
+    protected function cleanOutput($output): string
     {
         $output = preg_replace('/(?s)(<aside.*?<\/aside>)|Exit:  Ctrl\+D/ms', '$2', $output);
 
