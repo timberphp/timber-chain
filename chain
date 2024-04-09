@@ -5,6 +5,6 @@ include __DIR__ . '/vendor/autoload.php';
 
 $app = new \Symfony\Component\Console\Application();
 
-$app->add(new \Timberphp\TimberChain\Commands\ExecuteCodeCommand());
+$app->add(new \Timberphp\TimberChain\Commands\ExecuteCommand());
 
 $app->run();

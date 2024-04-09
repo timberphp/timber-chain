@@ -87,7 +87,7 @@ class CodeRunner
         $result = $this->shell->execute($this->removeComments($phpCode));
 
         // here we write to output to get raw string after processed by presenter
-        $this->shell->writeReturnValue($result);
+        $this->shell->writeReturnValue($result, true);
 
         if ($this->outputMode === 'buffered') {
             $output = $this->output->fetch();

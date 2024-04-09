@@ -19,9 +19,17 @@
             "Timberphp\\TimberChain\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Timberphp\\TimberChain\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "platform": {
             "php": "7.4"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }

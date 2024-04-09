@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Timberphp\TimberChain\CodeRunner;
 
-class ExecuteCodeCommand extends Command
+class ExecuteCommand extends Command
 {
     protected static $defaultName = 'execute';
 
