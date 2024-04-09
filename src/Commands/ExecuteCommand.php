@@ -28,7 +28,7 @@ class ExecuteCommand extends Command
     {
         $runner = new CodeRunner($input->getOption('stream') !== false ? 'stream' : 'buffered');
 
-        $code = $input->getOption('base64') !== false ? base64_decode(trim($input->getOption('base64'))) : $input->getArgument('code');
+        $code = $input->getOption('base64') !== false ? base64_decode($input->getArgument('code')) : $input->getArgument('code');
 
         $result = $runner
             ->bootstrapAt($input->getOption('target'))
