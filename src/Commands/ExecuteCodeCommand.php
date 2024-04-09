@@ -22,12 +22,12 @@ class ExecuteCodeCommand extends Command
             ->addArgument('code', InputArgument::REQUIRED, 'The code to execute')
             ->addOption('target', null, InputOption::VALUE_OPTIONAL, 'The target path to execute code in')
             ->addOption('base64', null, InputOption::VALUE_OPTIONAL, 'The code to execute in base64 format', false)
-            ->addOption('output-mode', null, InputOption::VALUE_OPTIONAL, 'The output mode (stream or buffered)', 'buffered');
+            ->addOption('stream', null, InputOption::VALUE_OPTIONAL, 'The output mode (stream or buffered)', false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $runner = new CodeRunner($input->getOption('output-mode'));
+        $runner = new CodeRunner($input->getOption('stream') !== false ? 'stream' : 'buffered');
 
         $code = $input->getOption('base64') ? base64_decode(trim($input->getOption('base64'))) : $input->getArgument('code');
 
