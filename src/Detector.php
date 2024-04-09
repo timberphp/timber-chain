@@ -7,7 +7,7 @@ use Timberphp\TimberChain\Drivers\LaravelDriver;
 use Timberphp\TimberChain\Drivers\WordpressDriver;
 use Timberphp\TimberChain\Drivers\PlanProjectDriver;
 
-class Sherlock
+class Detector
 {
     /**
      * @var string[]

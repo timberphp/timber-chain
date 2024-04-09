@@ -10,8 +10,9 @@
     }
   ],
   "require": {
-    "php": "^7.4|8.x",
-    "psy/psysh": "^0.12.3"
+    "php": "^7.4|^8.0",
+    "psy/psysh": "^0.12.3",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

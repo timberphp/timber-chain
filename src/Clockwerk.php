@@ -12,39 +12,23 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 class Clockwerk
 {
-    /**
-     * @var Shell
-     */
-    protected $shell;
+    protected Shell $shell;
 
-    /**
-     * @var OutputInterface
-     */
-    protected $output;
+    protected OutputInterface $output;
 
-    /**
-     * @var Sherlock
-     */
-    protected $sherlock;
+    protected Detector $sherlock;
 
-    /**
-     * @var string
-     */
-    protected $targetPath;
+    protected string $targetPath;
 
-    /**
-     * @var array
-     */
-    protected $casters = [];
+    protected array $casters = [];
 
-    /** @var bool  */
-    protected $outputMode;
+    protected string $outputMode;
 
     public function __construct($outputMode = 'buffered')
     {
         $this->outputMode = $outputMode;
         $this->output = $this->outputMode === 'stream' ? new StreamOutput(STDOUT) : new BufferedOutput();
-        $this->sherlock = new Sherlock();
+        $this->sherlock = new Detector();
     }
 
     protected function makeShell()
