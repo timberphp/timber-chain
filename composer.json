@@ -14,6 +14,9 @@
         "psy/psysh": "^0.12.3",
         "ext-json": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
     "autoload": {
         "psr-4": {
             "Timberphp\\TimberChain\\": "src/"
@@ -29,7 +32,11 @@
             "php": "7.4"
         }
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.6"
+    "bin": [
+        "chain"
+    ],
+    "scripts": {
+        "test": "phpunit",
+        "build": "composer install --no-dev --optimize-autoloader && ./bin/box.phar compile"
     }
 }
