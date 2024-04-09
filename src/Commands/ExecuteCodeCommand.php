@@ -19,27 +19,21 @@ class ExecuteCodeCommand extends Command
     protected function configure()
     {
         return $this
+            ->addArgument('code', InputArgument::REQUIRED, 'The code to execute')
             ->addOption('target', null, InputOption::VALUE_OPTIONAL, 'The target path to execute code in')
-            ->addOption('code', null, InputOption::VALUE_OPTIONAL, 'The code to execute')
-            ->addOption('base64Code', null, InputOption::VALUE_OPTIONAL, 'The code to execute in base64 format');
+            ->addOption('base64', null, InputOption::VALUE_OPTIONAL, 'The code to execute in base64 format', false)
+            ->addOption('output-mode', null, InputOption::VALUE_OPTIONAL, 'The output mode (stream or buffered)', 'buffered');
     }
 
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        if ($input->getOption('code') && $input->getOption('base64Code')) {
-            throw new \InvalidArgumentException('You can only provide one of the code or base64Code options');
-        }
-    }
+        $runner = new CodeRunner($input->getOption('output-mode'));
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $runner = new CodeRunner('buffered');
+        $code = $input->getOption('base64') ? base64_decode(trim($input->getOption('base64'))) : $input->getArgument('code');
 
         $result = $runner
             ->bootstrapAt($input->getOption('target'))
-            ->execute(
-                $input->getOption('code') ?: base64_decode(trim($input->getOption('base64Code')))
-            );
+            ->execute($code);
 
         $output->write($result);
 
