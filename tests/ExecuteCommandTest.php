@@ -1,9 +1,8 @@
 <?php
 
-namespace BangNokia\Psycho\Tests;
+namespace Timberphp\TimberChain\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Process\Process;
 
 class ExecuteCommandTest extends TestCase
 {
