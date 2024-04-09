@@ -1,0 +1,4 @@
+#!/usr/bin/env php
+<?php
+
+echo "this is Timber chain!";
