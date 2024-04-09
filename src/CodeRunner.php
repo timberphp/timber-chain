@@ -57,7 +57,7 @@ class CodeRunner
 
         $driver = $this->sherlock->detect($this->targetPath);
 
-        $driver->rollOut($this->targetPath);
+        $driver->bootstrap($this->targetPath);
 
         $this->casters = $driver->casters();
 

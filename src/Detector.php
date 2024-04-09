@@ -17,17 +17,13 @@ class Detector
         WordpressDriver::class,
     ];
 
-    /**
-     * @param  string  $subject
-     *
-     * @return AbstractDriver
-     */
-    public function detect(string $subject)
+    public function detect(string $projectPath)
     {
         foreach ($this->drivers as $driverClass) {
+            /** @var AbstractDriver $driver */
             $driver = new $driverClass();
 
-            if ($driver->deployable($subject)) {
+            if ($driver->canBootstrap($projectPath)) {
                 return $driver;
             }
         }

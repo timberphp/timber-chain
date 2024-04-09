@@ -4,14 +4,14 @@ namespace Timberphp\TimberChain\Drivers;
 
 abstract class AbstractDriver
 {
-    abstract function deployable(string $project): bool;
+    abstract function canBootstrap(string $project): bool;
 
     /**
      * Autobots roll out!
      *
-     * @param  string  $project
+     * @param  string  $projectPath
      */
-    abstract function rollOut(string $project): void;
+    abstract function bootstrap(string $projectPath): void;
 
     public function casters(): array
     {

@@ -4,16 +4,16 @@ namespace Timberphp\TimberChain\Drivers;
 
 class LaravelDriver extends AbstractDriver
 {
-    public function deployable(string $project): bool
+    public function canBootstrap(string $project): bool
     {
         return file_exists($project.'/artisan') && file_exists($project.'/public/index.php');
     }
 
-    public function rollOut(string $project): void
+    public function bootstrap(string $projectPath): void
     {
-        require_once $project.'/vendor/autoload.php';
+        require_once $projectPath.'/vendor/autoload.php';
 
-        $app = require $project.'/bootstrap/app.php';
+        $app = require $projectPath.'/bootstrap/app.php';
 
         $kernel = $app->make('Illuminate\Contracts\Console\Kernel');
 
