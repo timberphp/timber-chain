@@ -43,7 +43,7 @@ $greeting = "hello ".$name;
 EOF);
 
         $output = shell_exec(<<<BASH
-php $entry execute --target=$target "$phpCode" --base64
+php $entry execute "$phpCode" --target=$target --base64
 BASH
 );
 
